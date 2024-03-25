@@ -7,11 +7,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from "../components/ui/table";
+import { Button } from "../components/ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { getAllProduct, getProducts } from "@/Slices/Products/ProductSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getAllProduct, getProducts } from "../Slices/Products/ProductSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 type Props = {};
 

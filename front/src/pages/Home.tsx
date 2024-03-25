@@ -1,5 +1,5 @@
-import BarCharts from "@/components/charts/BarCharts";
-import Piecharts from "@/components/charts/PieCharts";
+import BarCharts from "../components/charts/BarCharts";
+import Piecharts from "../components/charts/PieCharts";
 
 type Props = {};
 

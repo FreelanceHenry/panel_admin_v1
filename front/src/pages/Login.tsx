@@ -1,8 +1,8 @@
-import { isLogin } from "@/Slices/Auth/AuthSlice";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useAppDispatch } from "@/hooks";
+import { isLogin } from "../Slices/Auth/AuthSlice";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { useAppDispatch } from "../hooks";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, useState } from "react";
 

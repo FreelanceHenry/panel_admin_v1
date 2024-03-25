@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../store";
 import axios from "axios";
-import { User } from "@/pages/Products";
-import { actionStorage, localStorage } from "@/lib/utils";
+import { User } from "../../pages/Products";
+import { actionStorage, localStorage } from  "../../lib/utils";
 
 export interface AuthSlice {
   user: User | null;

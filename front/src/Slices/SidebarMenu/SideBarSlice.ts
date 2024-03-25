@@ -1,6 +1,6 @@
 import {  createSlice } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../store';
-import { actionStorage, localStorage } from '@/lib/utils';
+import { actionStorage, localStorage } from '../../lib/utils';
 
 export interface SiderBarMenuState {
     currentPage: string | null;

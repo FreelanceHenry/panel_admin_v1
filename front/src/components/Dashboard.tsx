@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from "react";
+import React, { MouseEvent, useEffect, useId, useState } from "react";
 import { Input } from "./ui/input";
 import image from "../assets/logo-4.png";
 import {
@@ -10,15 +10,15 @@ import {
   FolderPlusIcon,
   ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import {
   currentPageActive,
   postCurrentPage,
-} from "@/Slices/SidebarMenu/SideBarSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { session, Logout } from "@/Slices/Auth/AuthSlice";
+} from "../Slices/SidebarMenu/SideBarSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { session, Logout } from "../Slices/Auth/AuthSlice";
 
 type Props = {
   children: React.ReactNode;
