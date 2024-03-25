@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan')
 const userRouter = require('./routes/users.js');
 const productsRouter = require('./routes/products.js');
 const authRouter = require('./routes/auth.js');
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json()); 
 app.use(cors());
+app.use(morgan('tiny'))
 
 app.use(`/api/Users`, userRouter);
 app.use(`/api/Products`, productsRouter);

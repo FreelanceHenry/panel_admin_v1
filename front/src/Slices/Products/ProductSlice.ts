@@ -39,7 +39,7 @@ export const getAllProduct =
 async (dispatch, getState ) => {
 
     try {
-        const response = await axios.get(`${URL_HOST}/api/products`)
+        const response = await axios.get(`${URL_HOST}/api/Products`)
  
         dispatch(getAll(response.data));
     } catch (error) {
