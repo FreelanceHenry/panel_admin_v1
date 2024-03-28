@@ -1,13 +1,11 @@
 {
   "name": "admin",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "start": " node functions/server.js",
-    "build": "netlify deploy --prod",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "start": "node functions/api.js",
+    "build": "netlify deploy --prod"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -22,7 +20,7 @@
     "nodemon": "^3.0.3",
     "serverless-http": "^3.2.0"
   },
-  "main": "index.js",
+  "main": "api.js",
   "author": "",
   "license": "ISC",
   "description": ""
