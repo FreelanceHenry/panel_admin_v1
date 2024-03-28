@@ -1,7 +1,6 @@
-const { pool } = require("../db/db.js");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv").config();
-const bcrypt = require("bcrypt");
+import  pool  from "../db/db.js";
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 class AuthService {
   constructor() {}
@@ -87,4 +86,4 @@ class AuthService {
 
 const authService = new AuthService();
 
-module.exports = authService;
+export default authService;

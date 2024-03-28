@@ -1,4 +1,4 @@
-const { pool } = require("../db/db.js");
+import  pool  from "../db/db.js";
 
 class ProductService {
   constructor() {}
@@ -20,4 +20,4 @@ class ProductService {
 
 const productService = new ProductService();
 
-module.exports = productService;
+export default productService;

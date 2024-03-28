@@ -1,7 +1,7 @@
-const express = require("express");
-const { pool } = require("../db/db.js");
-const userService = require("../services/users.js");
-const router = express.Router(); // Creas el enrutador express correctamente
+import express from 'express'
+import userService from '../services/users.js';
+
+const router = express.Router(); 
 
 router.get("/", async (req, res) => {
   try {
@@ -12,4 +12,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

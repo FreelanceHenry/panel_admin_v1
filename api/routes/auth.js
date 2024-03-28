@@ -1,7 +1,7 @@
-const express = require("express");
-const authService = require("../services/auth.js");
+import express from 'express'
+import authService from '../services/auth.js';
 
-const router = express.Router();
+const router = express.Router(); 
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -31,4 +31,4 @@ router.post("/register", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

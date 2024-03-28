@@ -1,5 +1,5 @@
-const mysql = require("mysql");
-const dotenv = require("dotenv");
+import mysql from 'mysql'
+import dotenv from 'dotenv'
 
 dotenv.config();
 
@@ -10,4 +10,4 @@ const pool = mysql.createPool({
   database: process.env.DATABASE,
 });
 
-module.exports = connection = { pool };
+export default pool
