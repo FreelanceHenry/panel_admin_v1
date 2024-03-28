@@ -20,7 +20,7 @@ app.use(morgan("tiny"));
 // NOTE: initial Server
 app.use("/.netlify/functions/api/v1/users", userRouter);
 app.use("/.netlify/functions/api/v1/products", productsRouter);
-app.use("/.netlify/functions/api/v1/Auth", authRouter);
+app.use("/.netlify/functions/api/v1/Auth", authRouter)
 
 app.listen(port, () => {
   console.log(`SERVIDOR ARRIBA EN PUERTO ${port}`);
