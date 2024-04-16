@@ -77,8 +77,8 @@ const Products: React.FC<Props> = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products?.map((product) => (
-              <TableRow key={product?.products_id } className=" w-20 h-20">
+            {products?.map((product, idx) => (
+              <TableRow key={idx} className=" w-20 h-20">
                 <TableCell className="font-medium">
                   {product?.products_name}
                 </TableCell>

@@ -1,0 +1,21 @@
+#STAGE ONE
+FROM node:21-alpine AS buildDev
+
+WORKDIR /usr/src/app
+
+COPY  package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build --dev
+
+#STAGE 2: EXPOSE APP
+FROM nginx:1.17.1-alpine
+
+COPY  --from=buildDev /usr/src/app/dist/ /usr/share/nginx/html
+COPY --from=buildDev  /usr/src/app/nginx.conf /etc/nginx/conf.d/default.conf
+
+
+EXPOSE 3000

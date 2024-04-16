@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import userRouter from '../routes/users.js'
 import productsRouter from '../routes/products.js'
 import authRouter from '../routes/auth.js'
+import bdvBankRouter from '../routes/bdvBank.js'
 
 dotenv.config()
 const app = express();
@@ -20,7 +21,8 @@ app.use(morgan("tiny"));
 // NOTE: initial Server
 app.use("/.netlify/functions/api/v1/users", userRouter);
 app.use("/.netlify/functions/api/v1/products", productsRouter);
-app.use("/.netlify/functions/api/v1/Auth", authRouter)
+app.use("/api/Auth", authRouter)
+app.use("/api/v1/payment", bdvBankRouter)
 
 app.listen(port, () => {
   console.log(`SERVIDOR ARRIBA EN PUERTO ${port}`);
