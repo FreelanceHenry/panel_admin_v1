@@ -4,10 +4,10 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import morgan from 'morgan'
 
-import userRouter from '../routes/users.js'
-import productsRouter from '../routes/products.js'
-import authRouter from '../routes/auth.js'
-import bdvBankRouter from '../routes/bdvBank.js'
+import userRouter from './routes/users.js'
+import productsRouter from './routes/products.js'
+import authRouter from './routes/auth.js'
+import bdvBankRouter from './routes/bdvBank.js'
 
 dotenv.config()
 const app = express();
