@@ -28,3 +28,4 @@ app.listen(port, () => {
   console.log(`SERVIDOR ARRIBA EN PUERTO ${port}`);
 });
 
+export const handler = serverless(app);
