@@ -8,6 +8,7 @@ import userRouter from './routes/users.js'
 import productsRouter from './routes/products.js'
 import authRouter from './routes/auth.js'
 import bdvBankRouter from './routes/bdvBank.js'
+import orderRouter from './routes/order.route.js'
 
 dotenv.config()
 const app = express();
@@ -23,6 +24,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/Auth", authRouter)
 app.use("/api/v1/payment", bdvBankRouter)
+app.use("/api/v1/Order", orderRouter)
 
 app.listen(port, () => {
   console.log(`SERVIDOR ARRIBA EN PUERTO ${port}`);
