@@ -17,7 +17,7 @@ class QuotesService {
         }
       );
     });
-    return response;
+    return response[0];
   }
 }
 

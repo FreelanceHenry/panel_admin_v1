@@ -22,7 +22,7 @@ class PaymentTypeService {
         }
       );
     });
-    return response;
+    return response[0];
   }
 }
 

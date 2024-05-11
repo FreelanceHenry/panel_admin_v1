@@ -22,7 +22,7 @@ class StatusGlobalService {
         }
       );
     });
-    return response;
+    return response[0];
   }
 }
 

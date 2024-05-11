@@ -74,20 +74,28 @@ class OrderService {
       )
         throw Error("Los datos son obligatorios");
 
+      // * Verify Reference duplicate
+      const isExist = quotesService.searchExistReference(data.reference_payment)
+
+      if(isExist){
+        throw Error('Referencia ya existe')
+      }
+
+
       //* Converting data in the format correct
-      const { paymentTypeId } = await paymentTypeService.getIdByName(
+      const   { payment_type_id }  = await paymentTypeService.getIdByName(
         data.payment_type_name
       );
-      const { statusGobalId } = await statusGlobalService.getIdByName(
+      const  { status_global_id }  = await statusGlobalService.getIdByName(
         data.status_global_name
       );
 
-      const { userId } = await userService.getIdByName(data.status_global_name);
+      const  { user_id }  = await userService.getIdByName(data.username);
 
       //*  create Order in to database
-      new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         pool.query(
-          ` INSERT INTO orders (payment_type_id, total, status_id)  VALUES ( ${paymentTypeId}, ${data.total}, ${statusGobalId} ) RETURNING orders.orders_id as _id`,
+          ` INSERT INTO orders (payment_type_id, total, status_id)  VALUES ( ${payment_type_id}, ${data.total}, ${status_global_id} )`,
           (error, results) => {
             if (error) {
               reject(error);
@@ -105,8 +113,8 @@ class OrderService {
         productsId: data.productsId,
       });
 
-      //*  create quotes in to database
-      await quotesService.createQuotes({ ...data, orderId: newOrder.id });
+    /*   //*  create quotes in to database
+      await quotesService.createQuotes({ ...data, orderId: newOrder.id }); */
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
       throw Error(error.message);

@@ -33,7 +33,7 @@ class UserService {
         }
       );
     });
-    return response;
+    return response[0];
   }
 }
 
