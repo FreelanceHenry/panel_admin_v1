@@ -3,14 +3,13 @@ import orderServices from "../services/order.service.js";
 
 const router = express.Router();
 
-
 // Access Users Client the organization
 // GET  /api/v1/Order
 router.get("/", async (req, res) => {
   const data = req.body;
 
   try {
-    const response = await orderServices.getOrder()
+    const response = await orderServices.getOrder();
     res.json(response);
   } catch (error) {
     console.error("Error executing query:", error);
@@ -18,10 +17,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // Access Users Client the organization
 // POST create /api/v1/order
-router.post("/", async (req, res) => {
+router.post("/", async (req, res) => { 
   const data = req.body;
 
   try {

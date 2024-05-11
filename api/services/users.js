@@ -19,6 +19,22 @@ class UserService {
     });
     return response;
   }
+  async getIdByName(username) {
+    const response = await new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM users
+          WHERE username = '${username}'`,
+        (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+    return response;
+  }
 }
 
 const userService = new UserService();
