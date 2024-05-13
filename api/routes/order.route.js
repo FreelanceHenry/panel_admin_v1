@@ -1,13 +1,12 @@
 import express from "express";
 import orderServices from "../services/order.service.js";
+import authMiddleware from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
 // Access Users Client the organization
 // GET  /api/v1/Order
-router.get("/", async (req, res) => {
-  const data = req.body;
-
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const response = await orderServices.getOrder();
     res.json(response);
@@ -19,7 +18,7 @@ router.get("/", async (req, res) => {
 
 // Access Users Client the organization
 // POST create /api/v1/order
-router.post("/", async (req, res) => { 
+router.post("/", async (req, res) => {
   const data = req.body;
 
   try {

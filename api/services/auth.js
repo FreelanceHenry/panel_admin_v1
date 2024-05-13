@@ -37,13 +37,11 @@ class AuthService {
       return res.status(500).send({ Message: "Contraseña Incorrecta" });
     }
 
-    const token = jwt.sign({ id: userData[0]._id }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ id: userData[0].user_id }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
 
-    const { password: userPassword, ...userWithoutPassword } = userData[0];
-
-    return { token, userWithoutPassword };
+    return { token };
   }
 
   async register( username, password, email, dni, rif) {
