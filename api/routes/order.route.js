@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
 
   try {
     const response = await orderServices.createOrder(data);
-    res.json(response);
+    res.json(response).status(200);
   } catch (error) {
     console.error("Error executing query:", error);
     res.status(500).send("Internal Server Error");
