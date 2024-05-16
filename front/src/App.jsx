@@ -5,12 +5,12 @@ import Users from "./pages/Users";
 import Orders from "./pages/Orders";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
-import { session } from "./Slices/Auth/AuthSlice";
+import { token } from "./Slices/Auth/AuthSlice";
 import { useEffect } from "react";
 import { useAppSelector } from "./hooks";
 
 function App() {
-  const user = useAppSelector(session);
+  const user = useAppSelector(token);
 
   const navigate = useNavigate();
   useEffect(() => {

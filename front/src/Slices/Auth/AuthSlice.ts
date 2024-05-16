@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../store";
 import axios from "axios";
-import { User } from "../../pages/Products";
-import { actionStorage, localStorage } from  "../../lib/utils";
+import {
+  actionStorage,
+  localStorage,
+  URL_HOST_DEV,
+  URL_HOST_PROD,
+} from "../../lib/utils";
 
 export interface AuthSlice {
-  user: User | null;
   token: string | null;
 }
 /* INITIAL STATE */
 const initialState: AuthSlice = {
-  user: null || localStorage("user", actionStorage.GET),
-  token: null || localStorage("token", actionStorage.GET),
+  token: null || window.localStorage.getItem("token"),
 };
 /* INITIAL STATE */
 
@@ -21,20 +23,13 @@ export const AuthSliceReducer = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      localStorage(
-        "user",
-        actionStorage.POST,
-        action?.payload?.userWithoutPassword
-      );
-
       localStorage("token", actionStorage.POST, action?.payload?.token);
-      (state.user = action?.payload?.userWithoutPassword),
-        (state.token = action.payload.token);
+
+      state.token = action.payload.token;
     },
     logout(state) {
       window.localStorage.removeItem("user");
       window.localStorage.removeItem("token");
-      state.user = null;
       state.token = null;
     },
   },
@@ -44,7 +39,6 @@ export const AuthSliceReducer = createSlice({
 export const { login, logout } = AuthSliceReducer.actions;
 
 /* SELECTOR */
-export const session = (state: RootState) => state.User.user;
 export const token = (state: RootState) => state.User.token;
 /* SELECTOR */
 
@@ -53,11 +47,12 @@ export const isLogin =
   (username: string, password: string): AppThunk =>
   async (dispatch, getState) => {
     try {
-      const res = await axios.post(`http://localhost:3000/api/Auth/login`, {
+      const res = await axios.post(`${URL_HOST_PROD}/api/v1/Auth/login`, {
         username,
         password,
       });
 
+      console.log(res);
       dispatch(login(res.data));
     } catch (error) {
       console.log(error);

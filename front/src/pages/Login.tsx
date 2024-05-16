@@ -1,3 +1,4 @@
+import React from "react";
 import { isLogin } from "../Slices/Auth/AuthSlice";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -24,7 +25,7 @@ const Login = () => {
     });
   };
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
       dispatch(isLogin(userData.username, userData.password));

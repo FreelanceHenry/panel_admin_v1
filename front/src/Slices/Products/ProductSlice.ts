@@ -2,7 +2,7 @@ import {  createSlice } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../store';
 import axios from 'axios'
 import { Products } from '../../pages/Products';
-import { URL_HOST } from '../../lib/utils';
+import { URL_HOST_PROD  } from '../../lib/utils';
 
 export interface ProductSliceState {
     list:  Products[];
@@ -39,7 +39,7 @@ export const getAllProduct =
 async (dispatch, getState ) => {
 
     try {
-        const response = await axios.get(`${URL_HOST}/api/Products`)
+        const response = await axios.get(`${URL_HOST_PROD}/api/Products`)
  
         dispatch(getAll(response.data));
     } catch (error) {

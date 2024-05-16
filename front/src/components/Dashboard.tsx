@@ -18,7 +18,7 @@ import {
   postCurrentPage,
 } from "../Slices/SidebarMenu/SideBarSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { session, Logout } from "../Slices/Auth/AuthSlice";
+import { token, Logout } from "../Slices/Auth/AuthSlice";
 
 type Props = {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ interface ButtonActions {
 
 const Dashboard: React.FC<Props> = ({ children }) => {
   const [page, setPage] = useState<string>("/");
-  const user = useAppSelector(session);
+  const user = useAppSelector(token);
   const navigate = useNavigate();
   const pageSelected = useAppSelector(currentPageActive);
   const dispatch = useAppDispatch();
@@ -139,7 +139,7 @@ const Dashboard: React.FC<Props> = ({ children }) => {
               {/* LOGOTIPO */}
               <h1 className="  ">
                 Bienvenido,{" "}
-                <span className="font-bold text-1xl">{user?.username}</span>{" "}
+                <span className="font-bold text-1xl">{/* {user?.username} */}</span>{" "}
               </h1>
             </div>
             <div className="w-[400px] h-10 ">

@@ -33,7 +33,7 @@ class BdvBankService {
           telefonoPagador,
           telefonoDestino,
           referencia,
-          fechaPago: "2024-05-15",
+          fechaPago,
           importe,
           bancoOrigen,
         },

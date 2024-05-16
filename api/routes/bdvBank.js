@@ -13,7 +13,7 @@ router.post("/mobile", async (req, res) => {
 
   try {
     const response = await bank.getStatus(data);
-    res.json(response); 
+    res.json(response);
   } catch (error) {
     console.error("Error executing query:", error);
     res.status(500).json(error.message);
