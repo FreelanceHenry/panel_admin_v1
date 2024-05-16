@@ -90,7 +90,7 @@ const Dashboard: React.FC<Props> = ({ children }) => {
   }, [page, pageSelected]);
 
   return (
-    <div className="flex  w-full h-[100vh] p-3  flex-col items-center ">
+    <div className="flex  w-full h-[100vh] p-3  flex-col items-center overflow-hidden ">
       {/* CONTAINER */}
 
       <div className="flex  w-full h-full ">
