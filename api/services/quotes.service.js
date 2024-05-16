@@ -20,9 +20,6 @@ class QuotesService {
 
       const installment_total_amount = total / quotes;
 
-      // * MAKE: function that calculate the date end
-      const pay_date_end = "2024-06-15";
-
       const dateFormatForMonth = calcularFechasCuotas(
         quotes,
         new Date(pay_date_initial)
@@ -31,16 +28,17 @@ class QuotesService {
       let queryString = `INSERT INTO quotes  
       (order_id, installment_total_amount, number_quote, date_initial_payment, date_end_payment, status, reference_payment, origin_bank, payer_phone, payer_card_identity)  
       VALUES (
-          ${orderId}, ${installment_total_amount}, 1 , '${dateFormatForMonth[0]}', '${pay_date_end}', '${status_global_name}', '${reference_payment}', 
+          ${orderId}, ${installment_total_amount}, 1 , '${dateFormatForMonth[0]}', '${dateFormatForMonth[1]}', '${status_global_name}', '${reference_payment}', 
           '${origin_bank}', '${payer_phone}', '${payer_card_identity}'
       )`;
 
       for (let i = 1; i < quotes; i++) {
         const date = dateFormatForMonth[i];
+
         queryString += `, (
           ${orderId}, ${installment_total_amount}, ${
           i + 1
-        }, '${date}', NULL, NULL, NULL, NULL, NULL, NULL
+        }, '${date}',NULL, NULL, NULL, NULL, NULL, NULL
       )`;
       }
 

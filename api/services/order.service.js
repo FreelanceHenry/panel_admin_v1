@@ -53,6 +53,8 @@ class OrderService {
   }
 
   async createOrder(data) {
+    const user = await userService.getById(data.user_id);
+
     try {
       //* Verify that the order  data  its not empty
       if (
@@ -61,10 +63,10 @@ class OrderService {
         data.origin_bank &&
         data.payer_phone &&
         data.payer_card_identity &&
-        data.email &&
-        data.rif &&
-        data.username &&
-        data.dni &&
+        user.email &&
+        user.rif &&
+        user.username &&
+        user.dni &&
         data.payment_type_name &&
         data.status_global_name &&
         data.quotes &&
@@ -90,8 +92,6 @@ class OrderService {
       const { status_global_id } = await statusGlobalService.getIdByName(
         data.status_global_name
       );
-
-      const { user_id } = await userService.getIdByName(data.username);
 
       //*  create Order in to database
       await new Promise((resolve, reject) => {
@@ -123,13 +123,16 @@ class OrderService {
 
       //*  create orders_product_user in to database
       await this.createRelationOrdersWhitProductAndUsers(
-        user_id,
+        user.user_id,
         newOrder[0].orders_id,
         data.products
       );
 
       //*  create quotes in to database
-      await quotesService.createQuotes({ ...data, orderId: newOrder[0].orders_id,});
+      await quotesService.createQuotes({
+        ...data,
+        orderId: newOrder[0].orders_id,
+      });
 
       return "The order was created successfully!";
     } catch (error) {
@@ -146,12 +149,11 @@ class OrderService {
          order_id ,
          products_id,
          user_id,
-         quantity,
-         total 
+         quantity
         )  
       VALUES ${data.map(
         (quotes) =>
-          `(${orderId}, ${quotes.product_id}, ${userId}, ${quotes.quantity}, ${quotes.total})`
+          `(${orderId}, ${quotes.products_id}, ${userId}, ${quotes.quantity})`
       )}
          `,
         (error, results) => {

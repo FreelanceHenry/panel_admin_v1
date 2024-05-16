@@ -1,4 +1,5 @@
 import axios from "axios";
+import quotesService from "../services/quotes.service.js";
 
 class BdvBankService {
   constructor(uri, key) {
@@ -15,17 +16,25 @@ class BdvBankService {
     importe,
     bancoOrigen,
   }) {
-
     try {
+      // Verify of existe reference
+      const isExist = await quotesService.searchIsExistReference(
+        referencia
+      );
+
+      if (isExist) {
+        throw new Error("Referencia ya existe!");
+      }
+
       const response = await axios.post(
         this.uri,
         {
           cedulaPagador,
           telefonoPagador,
-          telefonoDestino : "04241708810",
+          telefonoDestino,
           referencia,
-          fechaPago,
-          importe: "1.00",
+          fechaPago: "2024-05-15",
+          importe,
           bancoOrigen,
         },
         {
@@ -44,7 +53,7 @@ class BdvBankService {
       return { code, message };
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
-      throw error;
+      throw new Error(error.message);
     }
   }
 }

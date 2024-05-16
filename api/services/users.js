@@ -35,6 +35,23 @@ class UserService {
     });
     return response[0];
   }
+
+  async getById(userId) {
+    const response = await new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM users
+          WHERE user_id = ${userId}`,
+        (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+    return response[0];
+  }
 }
 
 const userService = new UserService();

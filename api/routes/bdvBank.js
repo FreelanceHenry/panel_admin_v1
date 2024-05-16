@@ -16,7 +16,7 @@ router.post("/mobile", async (req, res) => {
     res.json(response); 
   } catch (error) {
     console.error("Error executing query:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json(error.message);
   }
 });
 
