@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -10,13 +9,16 @@ import {
 import { TableHeaderType } from "../orders/types";
 
 type Props<T extends Record<string, any>> = {
-    TableHeaders: TableHeaderType[];
-    data: T[];
-  };
+  TableHeaders: TableHeaderType[];
+  data: T[];
+};
 
-const TableGeneric = <T extends Record<string, any>>({ TableHeaders, data }: Props<T>) => {
+const TableGeneric = <T extends Record<string, any>>({
+  TableHeaders,
+  data,
+}: Props<T>) => {
   return (
-    <Table >
+    <Table>
       <TableHeader>
         <TableRow>
           {TableHeaders.map((head, i) => (
@@ -27,13 +29,17 @@ const TableGeneric = <T extends Record<string, any>>({ TableHeaders, data }: Pro
         </TableRow>
       </TableHeader>
       <TableBody>
-      {data.map((item, index) => (
-          <TableRow key={index}>
-            {Object.values(item).map((value, i) => (
-              <TableCell key={i}>{value}</TableCell>
-            ))}
-          </TableRow>
-        ))}
+        {data.length > 0 ? (
+          data.map((item, index) => (
+            <TableRow key={index}>
+              {Object.values(item).map((value, i) => (
+                <TableCell key={i}>{value}</TableCell>
+              ))}
+            </TableRow>
+          ))
+        ) : (
+          <p>No se encontraron datos</p>
+        )}
       </TableBody>
     </Table>
   );

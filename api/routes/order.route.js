@@ -8,7 +8,7 @@ const router = express.Router();
 // GET  /api/v1/Order
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const response = await orderServices.getOrder();
+    const response = await orderServices.getOrder(req.user.id);
     res.json(response);
   } catch (error) {
     console.error("Error executing query:", error);

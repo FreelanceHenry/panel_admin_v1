@@ -1,19 +1,21 @@
 import TableGeneric from "../table/TableGeneric";
 import { orderHeaders } from "../table/OrderHeaders/header";
-import { DataTable } from "./types";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getAllOrders, getOrders } from "@/Slices/Orders/OrderSlice";
 
-type Props = {};
+const OrderView = () => {
+  const dispatch = useAppDispatch();
 
-const OrderView = (props: Props) => {
-  const data: DataTable[] = [
-    { id: 1, typeAmount: "2", total: 3900, status: "PENDIENTE" },
-    { id: 2, typeAmount: "2", total: 3900, status: "PENDIENTE" },
-    { id: 3, typeAmount: "2", total: 3900, status: "PENDIENTE" },
-    { id: 4, typeAmount: "2", total: 3900, status: "PENDIENTE" },
-  ];
+  const order = useAppSelector(getOrders);
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, []);
+
   return (
     <div>
-      <TableGeneric TableHeaders={orderHeaders} data={data} />
+      <TableGeneric TableHeaders={orderHeaders} data={order} />
     </div>
   );
 };

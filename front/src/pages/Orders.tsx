@@ -60,7 +60,7 @@ const Orders = (props: Props) => {
             (step) =>
               step.title === currentTab && (
                 <section key={step.id} className="w-full h-full">
-                  {" "}
+                
                   {step.viewComponent}
                 </section>
               )

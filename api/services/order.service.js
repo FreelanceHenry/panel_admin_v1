@@ -1,4 +1,5 @@
 import { pool } from "../db/db.js";
+import organizationService from "./organization.service.js";
 import paymentTypeService from "./paymentType.service.js";
 import quotesService from "./quotes.service.js";
 import statusGlobalService from "./statusGlobal.service.js";
@@ -7,35 +8,18 @@ import userService from "./users.js";
 class OrderService {
   constructor() {}
 
-  getOrder() {
+  async getOrder(userId) {
+    const organizationId = await organizationService.getOrganizationById(
+      userId
+    );
+
     try {
       const orders = new Promise((resolve, reject) => {
         pool.query(
-          `SELECT 
-          orders.orders_id as _id ,
-          orders.total,
-          users.email,
-          users.address,
-          users.rif,
-          users.username,
-          users.dni,
-          pt.payment_type_name,
-           GROUP_CONCAT(DISTINCT  p.products_id) AS products_array,
-           GROUP_CONCAT( DISTINCT quotes.quotes_id) AS quotes_array
-        FROM 
-          orders_product_user  
-        INNER JOIN orders 
-          ON orders.orders_id  = orders_product_user.order_id 
-        INNER JOIN quotes   
-          ON quotes.order_id  = orders_product_user.order_id  
-        INNER JOIN users 
-          ON users.user_id = orders_product_user.user_id
-        INNER JOIN payment_type pt  
-          ON pt.payment_type_id  = orders.payment_type_id 
-        INNER JOIN products p  
-          ON p.products_id  = orders_product_user.products_id  
-        GROUP BY orders.orders_id
-        ORDER BY orders.orders_id; `,
+          `SELECT *
+           FROM orders
+           WHERE organization_id = '${organizationId}'
+          `,
           (error, results) => {
             if (error) {
               reject(error);
