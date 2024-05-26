@@ -33,8 +33,8 @@ router.post("/", authMiddleware, async (req, res) => {
       pay_date_initial: data.fechaPago,
       status_global_name: "APROBADO",
       products: data.cart,
-      user_id: req.user.id
-    },  );
+      user_id: req?.user?.id,
+    });
     res.json(response).status(200);
   } catch (error) {
     console.error("Error executing query:", error);

@@ -9,16 +9,24 @@ class OrderService {
   constructor() {}
 
   async getOrder(userId) {
-    const organizationId = await organizationService.getOrganizationById(
+    const {organization_id} = await organizationService.getOrganizationById(
       userId
     );
 
     try {
       const orders = new Promise((resolve, reject) => {
         pool.query(
-          `SELECT *
-           FROM orders
-           WHERE organization_id = '${organizationId}'
+          `SELECT 
+          orders.orders_id,
+          payment_type.payment_type_name ,
+          orders.total,
+          status_global.status_global_name
+          FROM orders
+          INNER JOIN payment_type 
+            ON payment_type.payment_type_id = orders.payment_type_id 
+          INNER JOIN status_global 
+            ON status_global.status_global_id  = orders.status_id
+          WHERE organization_id = '${organization_id}'
           `,
           (error, results) => {
             if (error) {
@@ -77,10 +85,14 @@ class OrderService {
         data.status_global_name
       );
 
+      const {organization_id} = await organizationService.getOrganizationById(
+        data.user_id
+      );
+  
       //*  create Order in to database
       await new Promise((resolve, reject) => {
         pool.query(
-          ` INSERT INTO orders (payment_type_id, total, status_id)  VALUES ( ${payment_type_id}, ${data.total}, ${status_global_id} );
+          ` INSERT INTO orders (payment_type_id, total, status_id, organization_id)  VALUES ( ${payment_type_id}, ${data.total}, ${status_global_id}, ${organization_id});
            `,
           (error, results) => {
             if (error) {
