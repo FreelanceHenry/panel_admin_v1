@@ -19,7 +19,8 @@ import {
 } from "../Slices/SidebarMenu/SideBarSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { token, Logout } from "../Slices/Auth/AuthSlice";
-
+import Modal from "../components/modals/modal"
+import DataModal from "../components/modals/types"
 type Props = {
   children: React.ReactNode;
 };
@@ -81,6 +82,46 @@ const Dashboard: React.FC<Props> = ({ children }) => {
     },
   ]);
 
+  const data: DataModal[] = [
+    {
+      id: 1,
+      title: "Agregar Producto",
+      inputs: [
+        {
+          name: "nombre",
+          type: "text",
+          placeholder: "Nombre del producto",
+          validate: true,
+        },
+        {
+          name: "precio",
+          type: "number",
+          placeholder: "Precio",
+          validate: true,
+        },
+        {
+          name: "descripcion",
+          type: "text",
+          placeholder: "Descripción",
+          validate: true,
+        },
+        {
+          name: "Inventario",
+          type: "number",
+          placeholder: "Inventario",
+          validate: true,
+        },
+        {
+          name: "Imagen",
+          type: "file",
+          placeholder: "Imagen",
+          validate: true,
+        },
+      ],
+      footer: "Guardar",
+    },
+  ];
+
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     setPage(e.target.name);
   };
@@ -90,9 +131,9 @@ const Dashboard: React.FC<Props> = ({ children }) => {
   }, [page, pageSelected]);
 
   return (
-    <div className="flex  w-full h-[100vh] p-3  flex-col items-center overflow-hidden ">
+    <div className="flex  w-full h-[100vh] p-3  flex-col items-center overflow-hidden relative ">
       {/* CONTAINER */}
-
+      <Modal data={data}/>
       <div className="flex  w-full h-full ">
         {/* BOTTOM CONTAINER */}
         {/* SIDEBAR */}

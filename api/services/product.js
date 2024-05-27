@@ -41,6 +41,25 @@ class ProductService {
     });
     return response;
   }
+
+  addProduct(product) {
+    const response = new Promise((resolve, reject) => {
+     const {name, price, description, stock, image } = product;
+     const query = `
+     INSERT INTO products (products_name, products_total, products_description, stock, products_img1, products_img2, products_img3, products_img4)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+     `;
+     const values = [name, price, description, stock, image];
+     pool.query(query, values, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve({id:results.insertId, ...product});
+      }
+     })
+    })
+    return response;
+  }
 }
 
 const productService = new ProductService();
