@@ -12,7 +12,6 @@ import { Button } from "../components/ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { getAllProduct, getProducts } from "../Slices/Products/ProductSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import Modal from "../components/modals/modal"
 
 type Props = {};
 
@@ -55,8 +54,8 @@ const Products: React.FC<Props> = () => {
   }, []);
 
   return (
-    <div className=" h-full w-full p-5  flex flex-col relative">
-        <Modal/>
+    <div className=" h-full w-full p-5  flex flex-col relative ">
+      
       <div className="">
         {/* Render Actions Buttons */}
         <Button variant={"colorPrimary"}>

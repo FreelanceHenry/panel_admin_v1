@@ -22,11 +22,14 @@ export const ProductSliceReducer = createSlice({
     getAll: (state, action) => {
         state.list = action.payload;
       },
+      addProduct : (state, action) => {
+        state.list.push(action.payload);
+      }
   },
 });
 /* PARAMETERS STATE SLICE */
 
-export const { getAll } = ProductSliceReducer.actions;
+export const { getAll, addProduct } = ProductSliceReducer.actions;
 
 /* SELECTOR */
 export const getProducts = (state: RootState) => state.products.list
@@ -39,13 +42,21 @@ export const getAllProduct =
 async (dispatch, getState ) => {
 
     try {
-        const response = await axios.get(`${URL_HOST_PROD}/api/Products`)
+        const response = await axios.get(`${URL_HOST_PROD}/api/v1/Products`)
  
         dispatch(getAll(response.data));
     } catch (error) {
         console.log(error);
     }
 };
+
+export const createProducts = () : AppThunk => async (dispatch) => {
+    try {
+        const response = await axios.post(`${URL_HOST_PROD}/api/v1/Products/add`)
+    } catch (error) {
+    console.log(error);
+    }
+}
 /* ACTIONS FUNCTIONS */
 
 export default ProductSliceReducer.reducer;
