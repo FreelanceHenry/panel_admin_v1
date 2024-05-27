@@ -1,4 +1,5 @@
 import { pool } from "../db/db.js";
+import organizationService from "./organization.service.js";
 import paymentTypeService from "./paymentType.service.js";
 import quotesService from "./quotes.service.js";
 import statusGlobalService from "./statusGlobal.service.js";
@@ -7,35 +8,26 @@ import userService from "./users.js";
 class OrderService {
   constructor() {}
 
-  getOrder() {
+  async getOrder(userId) {
+    const {organization_id} = await organizationService.getOrganizationById(
+      userId
+    );
+
     try {
       const orders = new Promise((resolve, reject) => {
         pool.query(
           `SELECT 
-          orders.orders_id as _id ,
+          orders.orders_id,
+          payment_type.payment_type_name ,
           orders.total,
-          users.email,
-          users.address,
-          users.rif,
-          users.username,
-          users.dni,
-          pt.payment_type_name,
-           GROUP_CONCAT(DISTINCT  p.products_id) AS products_array,
-           GROUP_CONCAT( DISTINCT quotes.quotes_id) AS quotes_array
-        FROM 
-          orders_product_user  
-        INNER JOIN orders 
-          ON orders.orders_id  = orders_product_user.order_id 
-        INNER JOIN quotes   
-          ON quotes.order_id  = orders_product_user.order_id  
-        INNER JOIN users 
-          ON users.user_id = orders_product_user.user_id
-        INNER JOIN payment_type pt  
-          ON pt.payment_type_id  = orders.payment_type_id 
-        INNER JOIN products p  
-          ON p.products_id  = orders_product_user.products_id  
-        GROUP BY orders.orders_id
-        ORDER BY orders.orders_id; `,
+          status_global.status_global_name
+          FROM orders
+          INNER JOIN payment_type 
+            ON payment_type.payment_type_id = orders.payment_type_id 
+          INNER JOIN status_global 
+            ON status_global.status_global_id  = orders.status_id
+          WHERE organization_id = '${organization_id}'
+          `,
           (error, results) => {
             if (error) {
               reject(error);
@@ -93,10 +85,14 @@ class OrderService {
         data.status_global_name
       );
 
+      const {organization_id} = await organizationService.getOrganizationById(
+        data.user_id
+      );
+  
       //*  create Order in to database
       await new Promise((resolve, reject) => {
         pool.query(
-          ` INSERT INTO orders (payment_type_id, total, status_id)  VALUES ( ${payment_type_id}, ${data.total}, ${status_global_id} );
+          ` INSERT INTO orders (payment_type_id, total, status_id, organization_id)  VALUES ( ${payment_type_id}, ${data.total}, ${status_global_id}, ${organization_id});
            `,
           (error, results) => {
             if (error) {

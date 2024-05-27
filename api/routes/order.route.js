@@ -8,7 +8,7 @@ const router = express.Router();
 // GET  /api/v1/Order
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const response = await orderServices.getOrder();
+    const response = await orderServices.getOrder(req.user.id);
     res.json(response);
   } catch (error) {
     console.error("Error executing query:", error);
@@ -33,8 +33,8 @@ router.post("/", authMiddleware, async (req, res) => {
       pay_date_initial: data.fechaPago,
       status_global_name: "APROBADO",
       products: data.cart,
-      user_id: req.user.id
-    },  );
+      user_id: req?.user?.id,
+    });
     res.json(response).status(200);
   } catch (error) {
     console.error("Error executing query:", error);
