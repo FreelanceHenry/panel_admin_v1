@@ -38,7 +38,9 @@ const TableGeneric = <T extends Record<string, any>>({
             </TableRow>
           ))
         ) : (
-          <p>No se encontraron datos</p>
+          <TableCell colSpan={TableHeaders.length}>
+            <p>No se encontraron datos</p>
+          </TableCell>
         )}
       </TableBody>
     </Table>

@@ -5,13 +5,19 @@ class ProductService {
 
   getProducts() {
     const response = new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM products`, (error, results) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(results);
+      pool.query(
+        `SELECT * 
+      FROM products
+      WHERE date_create <= (SELECT MAX(date_create) FROM products);
+      `,
+        (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
         }
-      });
+      );
     });
 
     return response;
@@ -42,8 +48,8 @@ class ProductService {
     return response;
   }
 
-  addProduct(product) {
-     new Promise((resolve, reject) => {
+   addProduct(product) {
+    return new Promise((resolve, reject) => {
       const {
         products_name,
         products_total,
@@ -52,9 +58,9 @@ class ProductService {
         products_img1,
       } = product;
       const query = `
-     INSERT INTO products (products_name, products_total, products_description, stock, products_img1)
-     VALUES (?, ?, ?, ?, ?)
-     `;
+        INSERT INTO products (products_name, products_total, products_description, stock, products_img1)
+        VALUES (?, ?, ?, ?, ?)
+      `;
       const values = [
         products_name,
         products_total,
@@ -66,11 +72,15 @@ class ProductService {
         if (error) {
           reject(error);
         } else {
-          resolve({ id: results.insertId, ...product });
+          // Después de insertar el producto, obtenemos todos los productos
+          this.getProducts().then(products => {
+            resolve(products);
+          }).catch(err => {
+            reject(err);
+          });
         }
       });
     });
-    return this.getProducts();
   }
 }
 

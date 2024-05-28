@@ -1,11 +1,10 @@
 import {  createSlice } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../store';
 import axios from 'axios'
-import { Products } from '../../pages/Products';
 import { URL_HOST_PROD  } from '../../lib/utils';
 
 export interface ProductSliceState {
-    list:  Products[];
+    list:  any[];
 
 }
 /* INITIAL STATE */

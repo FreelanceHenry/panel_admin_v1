@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { URL_HOST_DEV } from "@/lib/utils";
+import { URL_HOST_DEV, URL_HOST_PROD } from "@/lib/utils";
 import {
   addEndpointAction,
   endpointModal,
@@ -42,7 +42,7 @@ const useModal = (): ModalState<any> => {
   const dataImput = async (
     data: { [key: string]: any } | null
   ): Promise<any> => {
-    const res = await axios.post(`${URL_HOST_DEV}${endpoint}`, data);
+    const res = await axios.post(`${URL_HOST_PROD}${endpoint}`, data);
     store.dispatch({
       type: `${reducerName}/refresh`,
       payload: res.data,
