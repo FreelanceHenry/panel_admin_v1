@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import { token } from "./Slices/Auth/AuthSlice";
 import { useEffect } from "react";
 import { useAppSelector } from "./hooks";
+import { ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const user = useAppSelector(token);
@@ -27,6 +29,7 @@ function App() {
             <Route path="/Productos" element={<Products />} />
             <Route path="/Usuarios" element={<Users />} />
           </Routes>
+          <ToastContainer/>
         </Dashboard>
       ) : (
         <div className="flex items-center justify-center w-[100vw] h-[100vh]">

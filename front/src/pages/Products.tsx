@@ -1,70 +1,83 @@
 import React, { useEffect } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { getAllProduct, getProducts } from "../Slices/Products/ProductSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { Button } from "../components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { Button } from "../components/ui/button";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { getAllProduct, getProducts } from "../Slices/Products/ProductSlice";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import useModal from "@/hooks/useModal";
+import imageDefault from '@/assets/images.jpg'
+import { DataModal } from "@/components/modals/types";
 
-type Props = {};
-
-export interface Products {
-  products_id: Number;
-  products_name: string;
-  products_description: string;
-  products_tiltle: string;
-  products_total: number;
-  products_img1: string;
-  products_img2: string;
-  products_img3: string;
-  products_img4: string;
-  categories_id: number;
-  products_condiciones: string;
-  color_id: number;
-  stock: number;
-  product_iva: number;
-}
-
-export interface User {
-  userId: number;
-  username: string;
-  email: string;
-  phone?: string;
-  password: string;
-  dni: string;
-  rif: string;
-  name?: string;
-  address?: string;
-  userTypeId: number;
-}
+interface Props {}
 
 const Products: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(getProducts);
 
+  const { openModal } = useModal();
   useEffect(() => {
     dispatch(getAllProduct());
   }, []);
 
+  const data: DataModal[] = [
+    {
+      id: 1,
+      title: "Agregar Producto",
+      inputs: [
+        {
+          name: "nombre",
+          type: "text",
+          placeholder: "Nombre del producto",
+          validate: true,
+        },
+        {
+          name: "precio",
+          type: "number",
+          placeholder: "Precio",
+          validate: true,
+        },
+        {
+          name: "descripcion",
+          type: "text",
+          placeholder: "Descripción",
+          validate: true,
+        },
+        {
+          name: "Inventario",
+          type: "number",
+          placeholder: "Inventario",
+          validate: true,
+        },
+        {
+          name: "Imagen",
+          type: "file",
+          placeholder: "Imagen",
+          validate: true,
+        },
+      ],
+      footer: "Guardar",
+    },
+  ];
+
   return (
-    <div className=" h-full w-full p-5  flex flex-col relative ">
-      
-      <div className="">
-        {/* Render Actions Buttons */}
-        <Button variant={"colorPrimary"}>
+    <div className="h-full w-full p-5 flex flex-col relative">
+      <div>
+        <Button
+          variant="colorPrimary"
+          onClick={() => openModal && openModal(data, '/api/v1/products/add', 'product')}
+        >
           <PlusIcon className="h-6 w-6 mr-2" />
-          Agergar producto
+          Agregar producto
         </Button>
       </div>
-      <div className="">
-        {/* Container Tablew */}
+      <div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -79,35 +92,35 @@ const Products: React.FC<Props> = () => {
           </TableHeader>
           <TableBody>
             {products?.map((product, idx) => (
-              <TableRow key={idx} className=" w-20 h-20">
+              <TableRow key={idx} className="w-20 h-20">
                 <TableCell className="font-medium">
                   {product?.products_name}
                 </TableCell>
                 <TableCell>
                   <img
-                    src={product?.products_img1}
+                    src={product?.products_img1 ?? imageDefault}
                     alt=""
                     width={100}
                     height={60}
-                    className=" object-cover"
+                    className="object-cover"
                   />
                 </TableCell>
                 <TableCell>
                   <img
-                    src={product?.products_img1}
+                    src={product?.products_img1 ?? imageDefault }
                     alt=""
                     width={100}
                     height={100}
-                    className=" object-cover"
+                    className="object-cover"
                   />
                 </TableCell>
                 <TableCell>
                   <img
-                    src={product?.products_img1}
+                    src={product?.products_img1 ?? imageDefault}
                     alt=""
                     width={100}
                     height={100}
-                    className=" object-cover"
+                    className="object-cover"
                   />
                 </TableCell>
                 <TableCell>{product?.product_iva ?? 0}</TableCell>

@@ -1,6 +1,8 @@
 import express from "express";
 import productService from "../services/product.js";
+import multer from "multer";
 
+const upload = multer();
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -25,24 +27,21 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  const {products_name, products_total, products_description, stock, products_img1, products_img2, products_img3, products_img4} = req.body;
+  const { nombre, precio, descripcion, Inventario, Image } = req.body;
   try {
     const newProduct = {
-      products_name,
-      products_total,
-      products_description,
-      stock,
-      products_img1,
-      products_img2,
-      products_img3,
-      products_img4,
+      products_name: nombre,
+      products_total: precio,
+      products_description: descripcion,
+      stock: Inventario,
+      products_img1: Image,
     };
     const createdProduct = await productService.addProduct(newProduct);
-    res.status(201).json(createdProduct)
+    res.status(201).json(createdProduct);
   } catch (error) {
-    console.error("Error adding product:", error)
+    console.error("Error adding product:", error);
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
 export default router;

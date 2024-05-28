@@ -38,13 +38,11 @@ export const getAllOrders =
 (): AppThunk =>
 async (dispatch, getState ) => {
         const token = window.localStorage.getItem('token')
-        console.log(token);
     try {
         const response = await axios.get(`${URL_HOST_PROD}/api/v1/Order`, {
             headers: { Authorization:`Bearer ${token}`}
         })
  
-        console.log(response);
         dispatch(getAllOrderForOrganization(response.data));
     } catch (error) {
         console.log(error);

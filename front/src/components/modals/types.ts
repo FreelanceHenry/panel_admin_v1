@@ -1,27 +1,15 @@
-
 export type DataModal = {
-    id :  string;
-    title: string;
-    inputs: ImputsModal[]
-    footer: string;
-}
+  id: number;
+  title: string;
+  inputs: ImputsModal[];
+  footer: string;
+};
 
-type MiddleModal = {
-   
-    
-}
+export type ImputsModal = {
+  name: string;
+  placeholder: string;
+  type: "date" | "number" | "text" | "select" | "file";
+  validate: boolean;
+};
 
-type FooterModal = {
-   
-    titleButton: string;
-    handleButton : () => void
-
-}
-
-type ImputsModal = {
-    id: string;
-    name: string;
-    placeholder: string;
-    type : "date" | "number" |  "text" | "select";
-    validate: boolean;
-}
+export type ErrorModal = { [key: string]: any };

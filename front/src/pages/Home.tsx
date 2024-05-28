@@ -22,11 +22,11 @@ const Home = (props: Props) => {
       </div>
       <div className=" bg-white p-5  shadow-xl flex rounded-3xl w-full h-[400px] ">
         <div className="">
-          <BarCharts />
+          {/* <BarCharts /> */}
         </div>
 
         <div className="flex flex-col w-full h-full items-center justify-center ">
-          <Piecharts />
+         {/*  <Piecharts /> */}
         </div>
       </div>
       <div className="bg-white shadow-xl rounded-3xl  w-full h-[400px] ">
