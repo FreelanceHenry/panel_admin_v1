@@ -1,4 +1,5 @@
 import { pool } from "../db/db.js";
+import imageService from "./image.service.js";
 
 class ProductService {
   constructor() {}
@@ -23,19 +24,12 @@ class ProductService {
     return response;
   }
 
-  getSingleProduct(id) {
-    const response = new Promise((resolve, reject) => {
+  async getSingleProduct(id) {
+    const response = await new Promise((resolve, reject) => {
       pool.query(
-        `
-      SELECT * ,
-      color.colors_name,
-      brand.brand_name,
-      categories.categories_name
-      FROM products
-      INNER JOIN color ON color.colors_id = products.color_id
-      INNER JOIN brand ON brand.brand_id = products.brand_id
-      INNER JOIN categories ON categories.categories_id = products.categories_id
-      WHERE products.products_id = ${id}`,
+        `SELECT *
+        FROM products
+        WHERE products.products_id = ${id}`,
         (error, results) => {
           if (error) {
             reject(error);
@@ -45,10 +39,12 @@ class ProductService {
         }
       );
     });
-    return response;
+
+    const res = await imageService.getImageById(response[0].products_img1);
+    return [{ ...response[0], image: res.file_name }]
   }
 
-   addProduct(product) {
+  addProduct(product) {
     return new Promise((resolve, reject) => {
       const {
         products_name,
@@ -73,11 +69,13 @@ class ProductService {
           reject(error);
         } else {
           // Después de insertar el producto, obtenemos todos los productos
-          this.getProducts().then(products => {
-            resolve(products);
-          }).catch(err => {
-            reject(err);
-          });
+          this.getProducts()
+            .then((products) => {
+              resolve(products);
+            })
+            .catch((err) => {
+              reject(err);
+            });
         }
       });
     });

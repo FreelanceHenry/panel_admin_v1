@@ -27,15 +27,16 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  const { nombre, precio, descripcion, Inventario, Image } = req.body;
+  const { nombre, precio, descripcion, Inventario, image } = req.body;
   try {
     const newProduct = {
       products_name: nombre,
       products_total: precio,
       products_description: descripcion,
       stock: Inventario,
-      products_img1: Image,
+      products_img1: image
     };
+
     const createdProduct = await productService.addProduct(newProduct);
     res.status(201).json(createdProduct);
   } catch (error) {

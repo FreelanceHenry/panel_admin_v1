@@ -42,7 +42,15 @@ const useModal = (): ModalState<any> => {
   const dataImput = async (
     data: { [key: string]: any } | null
   ): Promise<any> => {
-    const res = await axios.post(`${URL_HOST_PROD}${endpoint}`, data);
+    //* Insert Image
+    const image =
+      data?.Imagen &&
+      (await axios.post(`${URL_HOST_PROD}/api/v1/Image/add`, data?.Imagen));
+
+    const res = await axios.post(`${URL_HOST_PROD}${endpoint}`, {
+      ...data,
+      image: image.data.image_id,
+    });
     store.dispatch({
       type: `${reducerName}/refresh`,
       payload: res.data,

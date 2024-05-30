@@ -12,8 +12,8 @@ import {
   TableRow,
 } from "../components/ui/table";
 import useModal from "@/hooks/useModal";
-import imageDefault from '@/assets/images.jpg'
 import { DataModal } from "@/components/modals/types";
+import ImageView from "@/components/image/ImageView";
 
 interface Props {}
 
@@ -71,7 +71,9 @@ const Products: React.FC<Props> = () => {
       <div>
         <Button
           variant="colorPrimary"
-          onClick={() => openModal && openModal(data, '/api/v1/products/add', 'product')}
+          onClick={() =>
+            openModal && openModal(data, "/api/v1/products/add", "product")
+          }
         >
           <PlusIcon className="h-6 w-6 mr-2" />
           Agregar producto
@@ -83,8 +85,6 @@ const Products: React.FC<Props> = () => {
             <TableRow>
               <TableHead className="w-[100px]">Nombre</TableHead>
               <TableHead>Image</TableHead>
-              <TableHead>Imagen 2</TableHead>
-              <TableHead>Imagen 3</TableHead>
               <TableHead>IVA</TableHead>
               <TableHead>Cantidad</TableHead>
               <TableHead>Total</TableHead>
@@ -97,31 +97,7 @@ const Products: React.FC<Props> = () => {
                   {product?.products_name}
                 </TableCell>
                 <TableCell>
-                  <img
-                    src={product?.products_img1 ?? imageDefault}
-                    alt=""
-                    width={100}
-                    height={60}
-                    className="object-cover"
-                  />
-                </TableCell>
-                <TableCell>
-                  <img
-                    src={product?.products_img1 ?? imageDefault }
-                    alt=""
-                    width={100}
-                    height={100}
-                    className="object-cover"
-                  />
-                </TableCell>
-                <TableCell>
-                  <img
-                    src={product?.products_img1 ?? imageDefault}
-                    alt=""
-                    width={100}
-                    height={100}
-                    className="object-cover"
-                  />
+                  <ImageView imageId={product?.products_img1} />
                 </TableCell>
                 <TableCell>{product?.product_iva ?? 0}</TableCell>
                 <TableCell>{product?.stock}</TableCell>
