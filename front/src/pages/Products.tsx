@@ -65,7 +65,6 @@ const Products: React.FC<Props> = () => {
       footer: "Guardar",
     },
   ];
-
   return (
     <div className="h-full w-full p-5 flex flex-col relative">
       <div>

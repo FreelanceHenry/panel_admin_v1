@@ -11,21 +11,19 @@ const Modal: React.FC = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const name = e.target.name;
-    const file = e.target.files && e.target.files[0]
+    const file = e.target.files && e.target.files[0];
 
-    if (name === 'Imagen' && file) {
-      const formData = new FormData();
-      formData.append('archivo', file);
+    if (name === "Imagen" && file) {
       setModalData((prevData: any) => ({
-          ...prevData,
-          [name]: formData,
+        ...prevData,
+        [name]: file,
       }));
-  } else {
+    } else {
       setModalData((prevData: any) => ({
-          ...prevData,
-          [name]: value,
+        ...prevData,
+        [name]: value,
       }));
-  }
+    }
     setErrorsModal({
       ...errorsModal,
       [name]: value,
@@ -33,6 +31,7 @@ const Modal: React.FC = () => {
   };
 
 
+  console.log(modalData)
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -42,7 +41,6 @@ const Modal: React.FC = () => {
         return;
       }
     }
-    
 
     //*  InserData to Back
     dataImput(modalData)

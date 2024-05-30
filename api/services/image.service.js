@@ -19,8 +19,9 @@ class ImageService {
     const getLastImage = await new Promise((resolve, reject) => {
       pool.query(
         `SELECT * 
-        FROM image
-        WHERE image_id = LAST_INSERT_ID();
+        FROM image 
+        ORDER BY image_id DESC 
+        LIMIT 1;
         `,
         (error, results) => {
           if (error) {

@@ -42,11 +42,11 @@ const useModal = (): ModalState<any> => {
   const dataImput = async (
     data: { [key: string]: any } | null
   ): Promise<any> => {
-    //* Insert Image
-    const image =
-      data?.Imagen &&
-      (await axios.post(`${URL_HOST_PROD}/api/v1/Image/add`, data?.Imagen));
 
+    const formData = new FormData();
+    formData.append("archivo", data?.Imagen);
+    //* Insert Image
+    const image = await axios.post(`${URL_HOST_PROD}/api/v1/Image/add`, formData);
     const res = await axios.post(`${URL_HOST_PROD}${endpoint}`, {
       ...data,
       image: image.data.image_id,
