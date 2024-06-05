@@ -9,7 +9,7 @@ class OrderService {
   constructor() {}
 
   async getOrder(userId) {
-    const {organization_id} = await organizationService.getOrganizationById(
+    const { organization_id } = await organizationService.getOrganizationById(
       userId
     );
 
@@ -85,10 +85,10 @@ class OrderService {
         data.status_global_name
       );
 
-      const {organization_id} = await organizationService.getOrganizationById(
+      const { organization_id } = await organizationService.getOrganizationById(
         data.user_id
       );
-  
+
       //*  create Order in to database
       await new Promise((resolve, reject) => {
         pool.query(
@@ -161,6 +161,49 @@ class OrderService {
         }
       );
     });
+  }
+
+  async getProductsAndQuotes(orderId) {
+    try {
+      const products = await new Promise((resolve, reject) => {
+        pool.query(
+          `SELECT p.*, image.file_name
+          FROM orders_product_user opu 
+          INNER JOIN products p
+            ON p.products_id  = opu.products_id  
+          INNER JOIN image
+            ON image.image_id  = p.products_img1 
+           WHERE opu.order_id  = ${orderId}
+          `,
+          (error, results) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(results);
+            }
+          }
+        );
+      });
+      const quotes = await new Promise((resolve, reject) => {
+        pool.query(
+          ` SELECT *
+          FROM quotes 
+          WHERE quotes.order_id  = ${orderId}
+          `,
+          (error, results) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(results);
+            }
+          }
+        );
+      });
+      return {quotes, products};
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      throw error;
+    }
   }
 }
 

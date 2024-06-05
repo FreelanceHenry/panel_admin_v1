@@ -17,6 +17,20 @@ router.get("/", authMiddleware, async (req, res) => {
 });
 
 // Access Users Client the organization
+// GET  /api/v1/Order + ID ORDER
+router.get("/:orderId", authMiddleware, async (req, res) => {
+
+  const {orderId} = req.params
+  try {
+    const response = await orderServices.getProductsAndQuotes(orderId);
+    res.json(response);
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Access Users Client the organization
 // POST create /api/v1/order
 router.post("/", authMiddleware, async (req, res) => {
   const { data } = req.body;
