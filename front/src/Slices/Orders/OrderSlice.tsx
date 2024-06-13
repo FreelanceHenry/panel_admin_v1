@@ -71,7 +71,7 @@ async (dispatch, getState ) => {
         const token = window.localStorage.getItem('token')
         dispatch(setLoading(true))
     try {
-        const response = await axios.get(`${URL_HOST_DEV}/api/v1/Order/${orderId}`, {
+        const response = await axios.get(`${URL_HOST_PROD}/api/v1/Order/${orderId}`, {
             headers: { Authorization:`Bearer ${token}`}
         })
  
