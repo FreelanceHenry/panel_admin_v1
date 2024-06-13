@@ -3,3 +3,9 @@ export type Order = {
     total : number
     status: string
 }
+
+export type InfoOrder = {
+    products: any[]
+    quotes: any[]
+}
+

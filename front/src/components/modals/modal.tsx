@@ -31,7 +31,6 @@ const Modal: React.FC = () => {
   };
 
 
-  console.log(modalData)
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
